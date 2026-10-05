@@ -10,15 +10,21 @@
 
 **What task did you give the agent?**
 
-<!-- Describe the goal you asked the agent to accomplish -->
+Fix the Game Glitch Investigator project: reproduce the bugs, move the game logic into `logic_utils.py`, fix it, add `pytest` tests, and update the README and reflection, committing in separate steps.
 
 **What did the agent do?**
 
-<!-- List the steps the agent took (files edited, commands run, etc.) -->
+1. Read `app.py`, `logic_utils.py`, and the starter tests.
+2. Ran the original functions directly in Python to reproduce bugs (for example `check_guess(9, "50")` returned "Too High") and ran `pytest` (3 failures, `NotImplementedError`).
+3. Added `# FIXME` comments at each bug and filled in the Bug Reproduction Log. Commit 1.
+4. Moved the four logic functions into `logic_utils.py`, fixed them, and updated `app.py` to import them, added a `start_new_game()` helper, and fixed the attempt counter. Commit 2.
+5. Wrote 7 new tests and fixed the 3 starter tests to unpack `(outcome, message)`. Ran `pytest` (10 passed).
+6. Used Streamlit's `AppTest` to play scripted games (win, invalid input, lose, New Game, change difficulty) and confirm there were no exceptions.
+7. Updated `README.md` and `reflection.md`. Commit 3.
 
 **What did you have to verify or fix manually?**
 
-<!-- Describe anything the agent got wrong or that required human review -->
+The starter tests were themselves wrong (they compared a tuple to a string), so they had to be changed, not just the code. I also checked that the Demo Walkthrough numbers (final score 70 after guesses 70, abc, 30, 41) match what the game actually prints, and that `pytest` works from the project root (an empty `conftest.py` was added for that).
 
 ---
 
@@ -28,9 +34,9 @@
 
 | Edge Case | Prompt Used | AI-Suggested Test | Did It Pass? | Your Reasoning |
 |-----------|-------------|-------------------|--------------|----------------|
-| | | | | |
-| | | | | |
-| | | | | |
+| Secret stored as a string | Test that `check_guess` handles `"50"` like `50` | `check_guess(9, "50")` is "Too Low", `check_guess(100, "50")` is "Too High" | Yes | This was the actual bug on even attempts |
+| Decimal input | Test `parse_guess` with decimals | `"10.0"` accepted as 10, `"12.7"` rejected | Yes | Silently truncating 12.7 to 12 would be confusing |
+| Out-of-range input | Test `parse_guess` with range limits | `"0"` and `"101"` rejected for 1-100, `"100"` accepted | Yes | Checks both edges of an inclusive range |
 
 ---
 

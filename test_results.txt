@@ -1,0 +1,8 @@
+============================= test session starts ==============================
+platform linux -- Python 3.13.16, pytest-9.1.1, pluggy-1.6.0
+rootdir: /home/claude/game
+collected 10 items
+
+tests/test_game_logic.py ..........                                      [100%]
+
+============================== 10 passed in 0.01s ==============================
