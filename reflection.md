@@ -14,9 +14,13 @@ Document at least 3 bugs you found. Add rows as needed.
 
 | Input | Expected Behavior | Actual Behavior | Console Output / Error |
 |-------|-------------------|-----------------|------------------------|
-| | | | |
-| | | | |
-| | | | |
+| Guess `60`, secret `50` | "Too High" with a hint to go **lower** | Outcome "Too High" but message says "📈 Go HIGHER!" (hint is backwards) | No error. `check_guess(60, 50)` returns `('Too High', '📈 Go HIGHER!')` |
+| Guess `9` on an even-numbered attempt, secret `50` | "Too Low" | "Too High". On even attempts `app.py` turns the secret into a string, and `"9" > "50"` alphabetically | No error. `check_guess(9, "50")` returns `('Too High', ...)` |
+| Guess `100` on an even-numbered attempt, secret `50` | "Too High" | "Too Low" (`"100" < "50"` as strings) | No error. `check_guess(100, "50")` returns `('Too Low', ...)` |
+| Fresh game on Normal (8 attempts) | "Attempts left: 8" | "Attempts left: 7" because `attempts` starts at 1 | No error |
+| Lose a game, then click **New Game** | Fresh, playable game | Still shows "Game over" because `status` is never reset; secret is always 1-100 even on Easy | No error |
+| Wrong guess that is "Too High" on attempt 2 | Score goes down | Score goes **up** by 5 (`update_score(0, "Too High", 2)` returns `5`) | No error |
+| Run `pytest` on the starter code | Tests run | All 3 tests fail | `NotImplementedError: Refactor this function from app.py into logic_utils.py` |
 
 ---
 
